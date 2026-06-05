@@ -307,6 +307,37 @@ footer{background:#0F0F1E;padding:44px 0 36px;color:rgba(255,255,255,.35)}
 .modal-close{width:100%;background:var(--charcoal);color:#fff;padding:14px;border-radius:8px;font-size:.95rem;font-weight:700;border:none;cursor:pointer;transition:background .2s}
 .modal-close:hover{background:var(--charcoal2)}
 
+/* ─── ABOUT (만든 사람 소개) ─── */
+.about{background:var(--bg)}
+.about-grid{display:grid;grid-template-columns:400px 1fr;gap:64px;align-items:center}
+@media(max-width:960px){.about-grid{grid-template-columns:1fr;gap:40px}}
+.about-photo{width:400px;border-radius:16px;object-fit:cover;display:block}
+@media(max-width:960px){.about-photo{width:100%;max-width:480px;margin:0 auto}}
+.about-name{font-size:clamp(28px,3.5vw,42px);font-weight:800;color:var(--charcoal);letter-spacing:-.03em;margin-bottom:6px}
+.about-role{font-size:1rem;font-weight:700;color:var(--orange);letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px}
+.about-desc{font-size:clamp(15px,1.4vw,17px);color:var(--mid);line-height:1.9;margin-bottom:32px;word-break:keep-all}
+.about-btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn-kakao{display:inline-flex;align-items:center;gap:8px;background:#FEE500;color:#3C1E1E;padding:14px 28px;border-radius:8px;font-size:.95rem;font-weight:800;transition:all .2s;text-decoration:none;flex-shrink:0}
+.btn-kakao:hover{filter:brightness(.93);transform:translateY(-2px);box-shadow:0 8px 20px rgba(254,229,0,.4)}
+.btn-tel{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:#fff;padding:14px 28px;border-radius:8px;font-size:.95rem;font-weight:800;transition:all .2s;text-decoration:none;flex-shrink:0}
+.btn-tel:hover{background:var(--orange-d);transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,107,53,.3)}
+
+/* ─── REVIEWS (클라이언트 후기) ─── */
+.reviews{background:var(--white)}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){.reviews-grid{grid-template-columns:1fr}}
+.review-card{background:var(--white);border:2px solid var(--line);border-radius:var(--r);padding:28px 26px;transition:all .25s;display:flex;flex-direction:column;gap:14px;cursor:default}
+.review-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.1);border-color:rgba(255,107,53,.35)}
+.review-stars{color:#F5A623;font-size:1.1rem;letter-spacing:3px}
+.review-text{font-size:.93rem;color:var(--mid);line-height:1.8;flex:1;word-break:keep-all}
+.review-footer{display:flex;align-items:center;gap:10px;padding-top:14px;border-top:1px solid var(--line);margin-top:auto}
+.review-name{font-size:.92rem;font-weight:800;color:var(--charcoal)}
+.review-badge{padding:4px 10px;background:var(--bg);border-radius:6px;font-size:.72rem;font-weight:700;color:var(--mid);white-space:nowrap}
+
+/* ─── MOBILE STICKY CTA (2 buttons) ─── */
+.mcta-btns{display:flex;gap:8px;flex-shrink:0}
+.mcta-kakao{background:#FEE500;color:#3C1E1E;padding:11px 16px;border-radius:8px;font-size:.82rem;font-weight:800;white-space:nowrap;display:inline-flex;align-items:center;text-decoration:none}
+
 /* ─── RESPONSIVE EXTRA ─── */
 @media(max-width:480px){
   .hero h1{font-size:clamp(38px,12vw,56px)}
@@ -315,6 +346,8 @@ footer{background:#0F0F1E;padding:44px 0 36px;color:rgba(255,255,255,.35)}
   .proof-grid{grid-template-columns:1fr 1fr}
   .inc-grid{grid-template-columns:1fr}
   .container{padding:0 16px}
+  .about-btns{flex-direction:column}
+  .btn-kakao,.btn-tel{justify-content:center}
 }
 </style>
 </head>
@@ -549,7 +582,70 @@ footer{background:#0F0F1E;padding:44px 0 36px;color:rgba(255,255,255,.35)}
   </div>
 </section>
 
-<!-- ⑧ PORTFOLIO -->
+<!-- ⑧-A ABOUT (만든 사람 소개) -->
+<section class="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <img src="profile.jpg" alt="손국주 PageCraft 대표" class="about-photo reveal"/>
+      </div>
+      <div class="reveal d1">
+        <span class="eyebrow">ABOUT</span>
+        <div class="about-name">손국주</div>
+        <div class="about-role">PageCraft 대표</div>
+        <p class="about-desc">8년차 마케팅 전문가로 금융·법률·요식업·뷰티 등<br/>다양한 업종의 마케팅을 직접 진행했습니다.<br/><br/>고객이 무엇에 반응하는지, 어떤 카피가 전환을 만드는지<br/>현장에서 체득했습니다.<br/><br/>지금은 그 경험을 랜딩페이지에 녹여냅니다.</p>
+        <div class="about-btns">
+          <a class="btn-kakao" href="http://pf.kakao.com/_AsHGX/chat" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><ellipse cx="9" cy="8.5" rx="8" ry="6.5" fill="#3C1E1E" opacity=".85"/><path d="M5.5 10.5l1-2.5 1.5 1.5 1-2 1.5 2.5" stroke="#FEE500" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+            카카오톡 상담
+          </a>
+          <a class="btn-tel" href="tel:010-8822-2341">
+            📞 전화 연결
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧-B REVIEWS (클라이언트 후기) -->
+<section class="reviews">
+  <div class="container">
+    <div class="center">
+      <span class="eyebrow">REVIEWS</span>
+      <h2 class="sec-title reveal">함께한 클라이언트의 이야기</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal d1">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"레퍼런스 URL 하나 드렸는데 그날 저녁에 완성본이 왔어요. 솔직히 반신반의했는데 퀄리티 보고 바로 결제했습니다."</p>
+        <div class="review-footer">
+          <span class="review-name">신○○ 대표</span>
+          <span class="review-badge">보험설계사 채용</span>
+        </div>
+      </div>
+      <div class="review-card reveal d2">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"다른 업체는 2주 걸린다고 했는데 여기는 진짜 하루만에 됐어요. 마케팅도 아시는 분이라 카피도 직접 다듬어주셨어요."</p>
+        <div class="review-footer">
+          <span class="review-name">박○○ 원장</span>
+          <span class="review-badge">뷰티샵</span>
+        </div>
+      </div>
+      <div class="review-card reveal d3">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"제작 후 결제라고 해서 설마 했는데 진짜더라고요. 완성본 보고 너무 만족스러워서 바로 결제했습니다. 강력 추천합니다."</p>
+        <div class="review-footer">
+          <span class="review-name">김○○ 대표</span>
+          <span class="review-badge">법률 서비스</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧-C PORTFOLIO -->
 <section class="portfolio">
   <div class="container">
     <div class="center">
@@ -808,7 +904,10 @@ footer{background:#0F0F1E;padding:44px 0 36px;color:rgba(255,255,255,.35)}
     <strong>잔여 슬롯 9개 · 제작 후 결제 · 499,000원</strong>
     <span>지금 바로 신청하기</span>
   </div>
-  <button class="mcta-btn" onclick="scrollToForm()">신청하기</button>
+  <div class="mcta-btns">
+    <a class="mcta-kakao" href="http://pf.kakao.com/_AsHGX/chat" target="_blank" rel="noopener">카톡 상담</a>
+    <button class="mcta-btn" onclick="scrollToForm()">신청하기</button>
+  </div>
 </div>
 
 <!-- MODAL -->

@@ -1083,7 +1083,7 @@ document.querySelectorAll('.chip[data-v]').forEach(c => {
 });
 
 // ── APPS SCRIPT URL (구글 시트 연동 — URL 발급 후 여기에 입력) ──
-const APPS_SCRIPT_URL = 'PLACEHOLDER_APPS_SCRIPT_URL';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1FlpimopAgsCTmb92KcFYf2jYZ5L1m4hO9J2N1prQDLcLd-H2FOxvU__jtR0EdJsd/exec';
 
 // ── FORM SUBMIT ──
 document.getElementById('cf').addEventListener('submit', e => {
@@ -1116,14 +1116,12 @@ document.getElementById('cf').addEventListener('submit', e => {
   localStorage.setItem('pagecraft_submissions', JSON.stringify(subs));
 
   // ── 구글 시트 전송 (Apps Script URL 설정 후 자동 활성화) ──
-  if(APPS_SCRIPT_URL !== 'PLACEHOLDER_APPS_SCRIPT_URL'){
-    const params = new URLSearchParams({
-      name: sub.name, phone: sub.phone, reference: sub.reference,
-      description: sub.description, note: sub.note, budget: sub.budget,
-      createdAt: sub.createdAt
-    });
-    fetch(APPS_SCRIPT_URL + '?' + params, { method:'GET', mode:'no-cors' }).catch(()=>{});
-  }
+  const params = new URLSearchParams({
+    name: sub.name, phone: sub.phone, reference: sub.reference,
+    description: sub.description, note: sub.note, budget: sub.budget,
+    createdAt: sub.createdAt
+  });
+  fetch(APPS_SCRIPT_URL + '?' + params, { method:'GET', mode:'no-cors' }).catch(()=>{});
 
   document.getElementById('mask').classList.add('show');
   document.getElementById('cf').reset();

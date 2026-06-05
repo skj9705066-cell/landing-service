@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"/>
 <style>
 :root{
-  --orange:#FF6B35;--charcoal:#1A1A2E;--lime:#C8F135;
+  --orange:#FF6B35;--charcoal:#1A1A2E;
   --white:#fff;--bg:#F4F5F7;--line:#E4E5E7;
   --mid:#555566;--soft:#9CA3AF;--text:#1A1A2E;--r:10px;
 }
@@ -31,24 +31,28 @@ input,select,textarea{font-family:inherit}
 .lbtn{width:100%;background:var(--orange);color:#fff;padding:14px;border-radius:var(--r);font-size:1rem;font-weight:800;margin-top:4px;transition:background .2s}
 .lbtn:hover{background:#E55A25}
 
-/* ── ADMIN LAYOUT ── */
+/* ── LAYOUT ── */
 #adminWrap{min-height:100vh;display:flex;flex-direction:column}
 .anav{background:var(--charcoal);padding:0 24px;height:60px;display:flex;align-items:center;flex-shrink:0;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.2)}
 .anav-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
 .abrand{font-size:1.1rem;font-weight:800;color:#fff;letter-spacing:-.03em}
 .abrand span{color:var(--orange)}
 .abrand em{font-style:normal;font-size:.7rem;font-weight:600;color:rgba(255,255,255,.38);letter-spacing:.1em;margin-left:8px;text-transform:uppercase;vertical-align:middle}
+.nav-right{display:flex;align-items:center;gap:10px}
+.refresh-btn{font-size:.8rem;color:rgba(255,255,255,.55);padding:6px 12px;border:1px solid rgba(255,255,255,.15);border-radius:6px;transition:all .2s;display:flex;align-items:center;gap:5px}
+.refresh-btn:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.refresh-btn.spinning svg{animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 .logout-btn{font-size:.8rem;color:rgba(255,255,255,.5);padding:6px 14px;border:1px solid rgba(255,255,255,.15);border-radius:6px;transition:all .2s}
 .logout-btn:hover{color:#fff;border-color:rgba(255,255,255,.4)}
 
 .amain{flex:1;padding:28px 24px;max-width:1400px;margin:0 auto;width:100%}
-.page-title{font-size:1.1rem;font-weight:800;color:var(--charcoal);margin-bottom:20px;letter-spacing:-.02em}
+.page-title{font-size:1.1rem;font-weight:800;color:var(--charcoal);margin-bottom:20px}
 
 /* ── STATS ── */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
 @media(max-width:700px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
-.stat-card{background:var(--white);border-radius:var(--r);padding:18px 20px;border:2px solid var(--line);transition:box-shadow .2s}
-.stat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07)}
+.stat-card{background:var(--white);border-radius:var(--r);padding:18px 20px;border:2px solid var(--line)}
 .stat-num{font-size:2.2rem;font-weight:800;color:var(--charcoal);letter-spacing:-.04em;line-height:1;margin-bottom:6px}
 .stat-label{font-size:.72rem;color:var(--soft);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .s-today .stat-num{color:var(--orange)}
@@ -66,7 +70,7 @@ input,select,textarea{font-family:inherit}
 
 /* ── TABLE ── */
 .table-wrap{background:var(--white);border-radius:var(--r);border:2px solid var(--line);overflow-x:auto}
-.atable{width:100%;border-collapse:collapse;font-size:.86rem;min-width:900px}
+.atable{width:100%;border-collapse:collapse;font-size:.86rem;min-width:960px}
 .atable th{background:#F9F9FB;padding:11px 14px;text-align:left;font-size:.7rem;font-weight:700;color:var(--soft);letter-spacing:.07em;text-transform:uppercase;border-bottom:2px solid var(--line);white-space:nowrap}
 .atable td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--text)}
 .atable tr:last-child td{border-bottom:none}
@@ -82,7 +86,7 @@ input,select,textarea{font-family:inherit}
 .budget-badge.custom{background:#F0F7FF;color:#2563EB}
 
 /* status select */
-.status-sel{padding:5px 22px 5px 8px;border-radius:6px;font-size:.76rem;font-weight:700;border:none;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;min-width:80px}
+.status-sel{padding:5px 22px 5px 8px;border-radius:6px;font-size:.76rem;font-weight:700;border:none;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;min-width:82px}
 .st-new      {background:#FFF5F1;color:#FF6B35}
 .st-contacted{background:#EFF6FF;color:#2563EB}
 .st-working  {background:#FFFBEB;color:#D97706}
@@ -96,8 +100,17 @@ input,select,textarea{font-family:inherit}
 .memo-text.empty{color:#CCC}
 .memo-edit{display:none;width:100%;padding:5px 8px;border:1.5px solid var(--orange);border-radius:5px;font-size:.8rem;color:var(--text);outline:none;resize:none;min-height:54px;line-height:1.55}
 
-.empty-msg{text-align:center;padding:60px 24px;color:var(--soft);font-size:.9rem}
-.empty-icon{font-size:2.5rem;margin-bottom:10px}
+/* delete btn */
+.del-btn{padding:4px 8px;border-radius:5px;font-size:.72rem;font-weight:700;color:#6B7280;background:#F3F4F6;transition:all .15s;white-space:nowrap}
+.del-btn:hover{background:#FEE2E2;color:#DC2626}
+
+/* loading / empty / error */
+.state-box{text-align:center;padding:64px 24px;color:var(--soft);font-size:.9rem}
+.state-icon{font-size:2.5rem;margin-bottom:12px}
+.spinner{width:36px;height:36px;border:3px solid var(--line);border-top-color:var(--orange);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px}
+.error-msg{color:#DC2626;font-size:.85rem;margin-top:8px}
+.retry-btn{margin-top:14px;padding:8px 20px;border-radius:var(--r);background:var(--orange);color:#fff;font-size:.85rem;font-weight:700}
+.retry-btn:hover{background:#E55A25}
 </style>
 </head>
 <body>
@@ -121,31 +134,25 @@ input,select,textarea{font-family:inherit}
   <nav class="anav">
     <div class="anav-inner">
       <div class="abrand">Page<span>.</span>Craft <em>Admin</em></div>
-      <button class="logout-btn" id="logoutBtn">로그아웃</button>
+      <div class="nav-right">
+        <button class="refresh-btn" id="refreshBtn">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M11.5 2A6 6 0 1 0 12 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M8.5 2H11.5V5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          새로고침
+        </button>
+        <button class="logout-btn" id="logoutBtn">로그아웃</button>
+      </div>
     </div>
   </nav>
 
   <main class="amain">
     <div class="page-title">신청 관리</div>
 
-    <!-- 통계 카드 -->
+    <!-- 통계 -->
     <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-num" id="sTotal">0</div>
-        <div class="stat-label">전체 신청</div>
-      </div>
-      <div class="stat-card s-today">
-        <div class="stat-num" id="sToday">0</div>
-        <div class="stat-label">오늘 신청</div>
-      </div>
-      <div class="stat-card s-working">
-        <div class="stat-num" id="sWorking">0</div>
-        <div class="stat-label">제작중</div>
-      </div>
-      <div class="stat-card s-done">
-        <div class="stat-num" id="sDone">0</div>
-        <div class="stat-label">완료</div>
-      </div>
+      <div class="stat-card">         <div class="stat-num" id="sTotal">—</div>  <div class="stat-label">전체 신청</div></div>
+      <div class="stat-card s-today"> <div class="stat-num" id="sToday">—</div>  <div class="stat-label">오늘 신청</div></div>
+      <div class="stat-card s-working"><div class="stat-num" id="sWorking">—</div><div class="stat-label">제작중</div></div>
+      <div class="stat-card s-done">  <div class="stat-num" id="sDone">—</div>   <div class="stat-label">완료</div></div>
     </div>
 
     <!-- 툴바 -->
@@ -162,164 +169,160 @@ input,select,textarea{font-family:inherit}
         </select>
       </div>
       <button class="csv-btn" id="csvBtn">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        CSV 다운로드
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3.5 6l3 3 3-3M1.5 11h10" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        CSV
       </button>
     </div>
 
     <!-- 테이블 -->
-    <div class="table-wrap" id="tableWrap">
-      <table class="atable">
+    <div class="table-wrap">
+      <div id="tableState" class="state-box">
+        <div class="spinner"></div>
+        데이터를 불러오는 중…
+      </div>
+      <table class="atable" id="atable" style="display:none">
         <thead>
           <tr>
-            <th>신청일시</th>
-            <th>이름</th>
-            <th>연락처</th>
-            <th>예산</th>
-            <th>업종/서비스</th>
-            <th>레퍼런스</th>
-            <th>상태</th>
-            <th>메모</th>
+            <th>신청일시</th><th>이름</th><th>연락처</th><th>예산</th>
+            <th>업종/서비스</th><th>레퍼런스</th><th>상태</th><th>메모</th><th></th>
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
       </table>
-      <div class="empty-msg" id="emptyMsg" style="display:none">
-        <div class="empty-icon">📋</div>
-        신청 내역이 없습니다
-      </div>
     </div>
   </main>
 </div>
 
 <script>
-const ADMIN_ID  = 'admin';
-const ADMIN_PW  = 'pagecraft2025!!';
-const STORE_KEY = 'pagecraft_submissions';
-const SES_KEY   = 'pagecraft_admin';
+const ADMIN_ID = 'admin';
+const ADMIN_PW = 'pagecraft2025!!';
+const SES_KEY  = 'pagecraft_admin';
+const GAS_URL  = 'https://script.google.com/macros/s/AKfycbw1FlpimopAgsCTmb92KcFYf2jYZ5L1m4hO9J2N1prQDLcLd-H2FOxvU__jtR0EdJsd/exec';
 
-const STATUS_CLASS = {
-  '미연락':  'st-new',
-  '연락완료':'st-contacted',
-  '제작중':  'st-working',
-  '완료':    'st-done',
-  '취소':    'st-cancel',
-};
-const STATUSES = ['미연락','연락완료','제작중','완료','취소'];
+const STATUS_CLS = { '미연락':'st-new','연락완료':'st-contacted','제작중':'st-working','완료':'st-done','취소':'st-cancel' };
+const STATUSES   = ['미연락','연락완료','제작중','완료','취소'];
+
+let allRows = [];
+let searchQ = '', statusF = '';
 
 // ── 인증 ──────────────────────────────────────────────────────────────────
 function isLoggedIn(){ return sessionStorage.getItem(SES_KEY) === '1'; }
 
 document.getElementById('loginForm').addEventListener('submit', e => {
   e.preventDefault();
-  const id = document.getElementById('lid').value.trim();
-  const pw = document.getElementById('lpw').value;
-  if(id === ADMIN_ID && pw === ADMIN_PW){
+  if(document.getElementById('lid').value.trim() === ADMIN_ID &&
+     document.getElementById('lpw').value === ADMIN_PW){
     sessionStorage.setItem(SES_KEY, '1');
     showAdmin();
   } else {
     document.getElementById('lerr').classList.add('on');
   }
 });
-
 document.getElementById('logoutBtn').addEventListener('click', () => {
-  sessionStorage.removeItem(SES_KEY);
-  location.reload();
+  sessionStorage.removeItem(SES_KEY); location.reload();
 });
-
 function showAdmin(){
-  document.getElementById('loginWrap').style.display  = 'none';
-  document.getElementById('adminWrap').style.display  = 'flex';
-  renderAll();
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('adminWrap').style.display = 'flex';
+  loadData();
 }
-
 if(isLoggedIn()) showAdmin();
 
-// ── 데이터 ────────────────────────────────────────────────────────────────
-function load(){ return JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); }
-function save(d){ localStorage.setItem(STORE_KEY, JSON.stringify(d)); }
+// ── 데이터 로드 ───────────────────────────────────────────────────────────
+async function loadData(){
+  setLoading(true);
+  try {
+    const res  = await fetch(GAS_URL + '?action=getAll');
+    const json = await res.json();
+    // GAS가 배열 또는 {data:[...]} 형태로 반환하는 경우 모두 처리
+    allRows = Array.isArray(json) ? json : (json.data ?? []);
+    renderAll();
+    setLoading(false);
+  } catch(err) {
+    setError('데이터 조회 실패: ' + err.message);
+  }
+}
+
+function setLoading(on){
+  const st = document.getElementById('tableState');
+  const tb = document.getElementById('atable');
+  if(on){
+    st.innerHTML = '<div class="spinner"></div>데이터를 불러오는 중…';
+    st.style.display = 'block';
+    tb.style.display  = 'none';
+  } else {
+    st.style.display = 'none';
+    tb.style.display  = 'table';
+  }
+}
+function setError(msg){
+  document.getElementById('tableState').innerHTML =
+    `<div class="state-icon">⚠️</div><div class="error-msg">${esc(msg)}</div>
+     <button class="retry-btn" onclick="loadData()">다시 시도</button>`;
+  document.getElementById('tableState').style.display = 'block';
+  document.getElementById('atable').style.display = 'none';
+}
 
 // ── 통계 ──────────────────────────────────────────────────────────────────
-function updateStats(data){
+function updateStats(rows){
   const todayStr = new Date().toLocaleDateString('ko-KR');
-  document.getElementById('sTotal').textContent   = data.length;
-  document.getElementById('sToday').textContent   = data.filter(d => (d.createdAt||'').startsWith(todayStr)).length;
-  document.getElementById('sWorking').textContent = data.filter(d => d.status === '제작중').length;
-  document.getElementById('sDone').textContent    = data.filter(d => d.status === '완료').length;
+  document.getElementById('sTotal').textContent   = rows.length;
+  document.getElementById('sToday').textContent   = rows.filter(r => (r.createdAt||'').startsWith(todayStr)).length;
+  document.getElementById('sWorking').textContent = rows.filter(r => r.status === '제작중').length;
+  document.getElementById('sDone').textContent    = rows.filter(r => r.status === '완료').length;
 }
 
 // ── 렌더링 ────────────────────────────────────────────────────────────────
-let filter = { q: '', status: '' };
-
 function renderAll(){
-  const data = load();
-  updateStats(data);
+  updateStats(allRows);
+  let rows = [...allRows].reverse();
+  if(searchQ){ const q=searchQ.toLowerCase(); rows=rows.filter(r=>(r.name||'').toLowerCase().includes(q)||(r.phone||'').includes(q)||(r.description||'').toLowerCase().includes(q)); }
+  if(statusF) rows = rows.filter(r => r.status === statusF);
 
-  let rows = [...data].reverse();
-  if(filter.q){
-    const q = filter.q.toLowerCase();
-    rows = rows.filter(r =>
-      (r.name||'').toLowerCase().includes(q) ||
-      (r.phone||'').includes(q) ||
-      (r.description||'').toLowerCase().includes(q)
-    );
-  }
-  if(filter.status) rows = rows.filter(r => r.status === filter.status);
-
-  const tbody   = document.getElementById('tbody');
-  const emptyEl = document.getElementById('emptyMsg');
-
+  const tbody = document.getElementById('tbody');
   if(!rows.length){
-    tbody.innerHTML = '';
-    emptyEl.style.display = 'block';
+    tbody.innerHTML = `<tr><td colspan="9"><div class="state-box"><div class="state-icon">📋</div>신청 내역이 없습니다</div></td></tr>`;
     return;
   }
-  emptyEl.style.display = 'none';
 
   tbody.innerHTML = rows.map(r => {
-    const sc  = STATUS_CLASS[r.status] || 'st-new';
-    const bCls = r.budget === 'plan' ? 'plan' : r.budget === 'custom' ? 'custom' : '';
-    const bLbl = r.budget === 'plan' ? '기획+제작 99만' : r.budget === 'custom' ? '커스텀 문의' : '기본 49.9만';
-    const opts = STATUSES.map(s =>
-      `<option value="${s}"${s===r.status?' selected':''}>${s}</option>`
-    ).join('');
-    const ref = r.reference
+    const sc  = STATUS_CLS[r.status] || 'st-new';
+    const bCls = r.budget==='plan'?'plan':r.budget==='custom'?'custom':'';
+    const bLbl = r.budget==='plan'?'기획+제작 99만':r.budget==='custom'?'커스텀 문의':'기본 49.9만';
+    const opts = STATUSES.map(s=>`<option value="${s}"${s===r.status?' selected':''}>${s}</option>`).join('');
+    const ref  = r.reference
       ? `<a href="${esc(r.reference)}" target="_blank" rel="noopener" title="${esc(r.reference)}">${esc(trunc(r.reference,26))}</a>`
       : '<span style="color:#ccc">—</span>';
     const memoEmpty = !(r.memo||'').trim();
+    const ri = r.rowIndex ?? r.id;
     return `
-    <tr data-id="${r.id}">
+    <tr data-ri="${ri}">
       <td class="td-date">${esc(r.createdAt||'')}</td>
       <td class="td-name">${esc(r.name||'')}</td>
       <td class="td-phone">${esc(r.phone||'')}</td>
       <td><span class="budget-badge ${bCls}">${bLbl}</span></td>
       <td class="td-desc">${esc(r.description||'')}</td>
       <td class="td-ref">${ref}</td>
-      <td>
-        <select class="status-sel ${sc}" onchange="changeStatus(${r.id},this)">
-          ${opts}
-        </select>
-      </td>
+      <td><select class="status-sel ${sc}" onchange="changeStatus(${ri},this)">${opts}</select></td>
       <td class="memo-cell">
         <div class="memo-text${memoEmpty?' empty':''}" onclick="startEdit(this)">${memoEmpty?'메모 입력…':esc(r.memo)}</div>
-        <textarea class="memo-edit" onblur="saveMemo(${r.id},this)" onkeydown="memoKey(event,${r.id},this)">${esc(r.memo||'')}</textarea>
+        <textarea class="memo-edit" onblur="saveMemo(${ri},this)" onkeydown="memoKey(event,${ri},this)">${esc(r.memo||'')}</textarea>
       </td>
+      <td><button class="del-btn" onclick="deleteRow(${ri},this)">삭제</button></td>
     </tr>`;
   }).join('');
 }
 
 // ── 상태 변경 ─────────────────────────────────────────────────────────────
-function changeStatus(id, sel){
-  const data = load();
-  const item = data.find(d => d.id === id);
-  if(!item) return;
-  item.status = sel.value;
-  save(data);
-  sel.className = 'status-sel ' + (STATUS_CLASS[sel.value]||'st-new');
-  updateStats(data);
+function changeStatus(ri, sel){
+  const row = allRows.find(r=>(r.rowIndex??r.id)===ri);
+  if(row) row.status = sel.value;
+  sel.className = 'status-sel ' + (STATUS_CLS[sel.value]||'st-new');
+  updateStats(allRows);
+  gasUpdate(ri, 'status', sel.value);
 }
 
-// ── 메모 인라인 편집 ─────────────────────────────────────────────────────
+// ── 메모 편집 ─────────────────────────────────────────────────────────────
 function startEdit(el){
   el.style.display = 'none';
   const ta = el.nextElementSibling;
@@ -327,48 +330,63 @@ function startEdit(el){
   ta.focus();
   ta.selectionStart = ta.selectionEnd = ta.value.length;
 }
-
-function saveMemo(id, ta){
-  const data = load();
-  const item = data.find(d => d.id === id);
-  if(item){ item.memo = ta.value; save(data); }
+function saveMemo(ri, ta){
+  const row = allRows.find(r=>(r.rowIndex??r.id)===ri);
+  if(row) row.memo = ta.value;
   ta.style.display = 'none';
-  const textEl = ta.previousElementSibling;
-  const empty  = !(ta.value||'').trim();
-  textEl.textContent = empty ? '메모 입력…' : ta.value;
-  textEl.className   = 'memo-text' + (empty ? ' empty' : '');
-  textEl.style.display = 'block';
+  const el = ta.previousElementSibling;
+  const empty = !(ta.value||'').trim();
+  el.textContent = empty ? '메모 입력…' : ta.value;
+  el.className   = 'memo-text' + (empty?' empty':'');
+  el.style.display = 'block';
+  gasUpdate(ri, 'memo', ta.value);
+}
+function memoKey(e, ri, ta){
+  if(e.key==='Escape'||(!e.shiftKey&&e.key==='Enter')){ e.preventDefault(); saveMemo(ri,ta); }
 }
 
-function memoKey(e, id, ta){
-  if(e.key==='Escape'){ e.preventDefault(); saveMemo(id,ta); }
-  if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); saveMemo(id,ta); }
+// ── 삭제 ──────────────────────────────────────────────────────────────────
+function deleteRow(ri, btn){
+  if(!confirm('삭제하시겠습니까? 구글 시트에서도 삭제됩니다.')) return;
+  btn.closest('tr').remove();
+  allRows = allRows.filter(r=>(r.rowIndex??r.id)!==ri);
+  updateStats(allRows);
+  fetch(GAS_URL + '?' + new URLSearchParams({ action:'delete', rowIndex:ri }), { mode:'no-cors' }).catch(()=>{});
+}
+
+// ── GAS 업데이트 (fire-and-forget) ────────────────────────────────────────
+function gasUpdate(ri, field, value){
+  fetch(GAS_URL + '?' + new URLSearchParams({ action:'update', rowIndex:ri, field, value }), { mode:'no-cors' }).catch(()=>{});
 }
 
 // ── 검색 / 필터 ───────────────────────────────────────────────────────────
-document.getElementById('searchInput').addEventListener('input', e => { filter.q = e.target.value; renderAll(); });
-document.getElementById('filterStatus').addEventListener('change', e => { filter.status = e.target.value; renderAll(); });
+document.getElementById('searchInput').addEventListener('input', e => { searchQ=e.target.value; renderAll(); });
+document.getElementById('filterStatus').addEventListener('change', e => { statusF=e.target.value; renderAll(); });
+document.getElementById('refreshBtn').addEventListener('click', () => {
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+  loadData().finally(() => btn.classList.remove('spinning'));
+});
 
-// ── CSV 다운로드 ──────────────────────────────────────────────────────────
+// ── CSV ───────────────────────────────────────────────────────────────────
 document.getElementById('csvBtn').addEventListener('click', () => {
-  const data = load();
-  if(!data.length){ alert('다운로드할 데이터가 없습니다'); return; }
+  if(!allRows.length){ alert('다운로드할 데이터가 없습니다'); return; }
   const headers = ['신청일시','이름','연락처','예산','업종/서비스','레퍼런스URL','추가요청','상태','메모'];
-  const rows = data.map(r => [
+  const rows = allRows.map(r => [
     r.createdAt, r.name, r.phone,
     r.budget==='plan'?'기획+제작 999,000':r.budget==='custom'?'커스텀 문의':'기본 499,000',
     r.description, r.reference, r.note, r.status, r.memo
-  ].map(v => `"${String(v||'').replace(/"/g,'""')}"`).join(','));
+  ].map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(','));
   const csv = '﻿' + [headers.join(','), ...rows].join('\r\n');
   const a = document.createElement('a');
   a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-  a.download = `pagecraft_신청_${new Date().toLocaleDateString('ko-KR').replace(/\. /g,'-').replace('.','')}`.replace(' ','') + '.csv';
+  a.download = `pagecraft_신청_${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
 });
 
 // ── 유틸 ──────────────────────────────────────────────────────────────────
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function trunc(s,n){ return s.length>n ? s.slice(0,n)+'…' : s; }
+function trunc(s,n){ return s.length>n?s.slice(0,n)+'…':s; }
 </script>
 </body>
 </html>

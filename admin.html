@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PageCraft Admin</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"/>
+<style>
+:root{
+  --orange:#FF6B35;--charcoal:#1A1A2E;--lime:#C8F135;
+  --white:#fff;--bg:#F4F5F7;--line:#E4E5E7;
+  --mid:#555566;--soft:#9CA3AF;--text:#1A1A2E;--r:10px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:15px;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:inherit}
+
+/* ── LOGIN ── */
+#loginWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--charcoal)}
+.login-box{background:var(--white);border-radius:20px;padding:48px 40px;width:100%;max-width:380px;box-shadow:0 24px 64px rgba(0,0,0,.35)}
+.login-brand{font-size:1.5rem;font-weight:800;color:var(--charcoal);letter-spacing:-.04em;margin-bottom:6px}
+.login-brand span{color:var(--orange)}
+.login-sub{font-size:.85rem;color:var(--soft);margin-bottom:32px}
+.lfield{margin-bottom:14px}
+.lfield input{width:100%;padding:13px 16px;border:2px solid var(--line);border-radius:var(--r);font-size:.95rem;outline:none;transition:border .2s;background:var(--bg)}
+.lfield input:focus{border-color:var(--orange);background:var(--white)}
+.lerr{color:#E53935;font-size:.8rem;margin-bottom:10px;display:none}
+.lerr.on{display:block}
+.lbtn{width:100%;background:var(--orange);color:#fff;padding:14px;border-radius:var(--r);font-size:1rem;font-weight:800;margin-top:4px;transition:background .2s}
+.lbtn:hover{background:#E55A25}
+
+/* ── ADMIN LAYOUT ── */
+#adminWrap{min-height:100vh;display:flex;flex-direction:column}
+.anav{background:var(--charcoal);padding:0 24px;height:60px;display:flex;align-items:center;flex-shrink:0;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.anav-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.abrand{font-size:1.1rem;font-weight:800;color:#fff;letter-spacing:-.03em}
+.abrand span{color:var(--orange)}
+.abrand em{font-style:normal;font-size:.7rem;font-weight:600;color:rgba(255,255,255,.38);letter-spacing:.1em;margin-left:8px;text-transform:uppercase;vertical-align:middle}
+.logout-btn{font-size:.8rem;color:rgba(255,255,255,.5);padding:6px 14px;border:1px solid rgba(255,255,255,.15);border-radius:6px;transition:all .2s}
+.logout-btn:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+
+.amain{flex:1;padding:28px 24px;max-width:1400px;margin:0 auto;width:100%}
+.page-title{font-size:1.1rem;font-weight:800;color:var(--charcoal);margin-bottom:20px;letter-spacing:-.02em}
+
+/* ── STATS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+@media(max-width:700px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:var(--white);border-radius:var(--r);padding:18px 20px;border:2px solid var(--line);transition:box-shadow .2s}
+.stat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07)}
+.stat-num{font-size:2.2rem;font-weight:800;color:var(--charcoal);letter-spacing:-.04em;line-height:1;margin-bottom:6px}
+.stat-label{font-size:.72rem;color:var(--soft);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.s-today .stat-num{color:var(--orange)}
+.s-working .stat-num{color:#D97706}
+.s-done .stat-num{color:#16A34A}
+
+/* ── TOOLBAR ── */
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.toolbar-left{display:flex;gap:10px;flex-wrap:wrap;flex:1}
+.search-input{padding:10px 14px;border:2px solid var(--line);border-radius:var(--r);font-size:.88rem;outline:none;transition:border .2s;min-width:200px;flex:1;background:var(--white)}
+.search-input:focus{border-color:var(--orange)}
+.filter-sel{padding:10px 12px;border:2px solid var(--line);border-radius:var(--r);font-size:.88rem;outline:none;background:var(--white);cursor:pointer;min-width:120px}
+.csv-btn{background:var(--charcoal);color:#fff;padding:10px 18px;border-radius:var(--r);font-size:.85rem;font-weight:700;transition:background .2s;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.csv-btn:hover{background:#252540}
+
+/* ── TABLE ── */
+.table-wrap{background:var(--white);border-radius:var(--r);border:2px solid var(--line);overflow-x:auto}
+.atable{width:100%;border-collapse:collapse;font-size:.86rem;min-width:900px}
+.atable th{background:#F9F9FB;padding:11px 14px;text-align:left;font-size:.7rem;font-weight:700;color:var(--soft);letter-spacing:.07em;text-transform:uppercase;border-bottom:2px solid var(--line);white-space:nowrap}
+.atable td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--text)}
+.atable tr:last-child td{border-bottom:none}
+.atable tr:hover td{background:#FAFAFA}
+.td-date{color:var(--soft);font-size:.78rem;white-space:nowrap;line-height:1.5}
+.td-name{font-weight:700;white-space:nowrap}
+.td-phone{white-space:nowrap;font-weight:600;font-size:.85rem}
+.td-ref a{color:var(--orange);font-size:.78rem;display:inline-block;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:bottom}
+.td-ref a:hover{text-decoration:underline}
+.td-desc{max-width:160px;color:var(--mid);font-size:.8rem;line-height:1.55}
+.budget-badge{display:inline-block;padding:3px 8px;border-radius:5px;font-size:.7rem;font-weight:700;background:#F0F0F5;color:var(--mid);white-space:nowrap}
+.budget-badge.plan{background:#FFF5F1;color:var(--orange)}
+.budget-badge.custom{background:#F0F7FF;color:#2563EB}
+
+/* status select */
+.status-sel{padding:5px 22px 5px 8px;border-radius:6px;font-size:.76rem;font-weight:700;border:none;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;min-width:80px}
+.st-new      {background:#FFF5F1;color:#FF6B35}
+.st-contacted{background:#EFF6FF;color:#2563EB}
+.st-working  {background:#FFFBEB;color:#D97706}
+.st-done     {background:#F0FDF4;color:#16A34A}
+.st-cancel   {background:#F3F4F6;color:#6B7280}
+
+/* memo */
+.memo-cell{min-width:140px;max-width:190px}
+.memo-text{font-size:.8rem;color:var(--mid);line-height:1.55;cursor:pointer;padding:4px 6px;border-radius:5px;border:1.5px solid transparent;transition:border .15s;word-break:break-all;min-height:28px}
+.memo-text:hover{border-color:var(--line)}
+.memo-text.empty{color:#CCC}
+.memo-edit{display:none;width:100%;padding:5px 8px;border:1.5px solid var(--orange);border-radius:5px;font-size:.8rem;color:var(--text);outline:none;resize:none;min-height:54px;line-height:1.55}
+
+.empty-msg{text-align:center;padding:60px 24px;color:var(--soft);font-size:.9rem}
+.empty-icon{font-size:2.5rem;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div id="loginWrap">
+  <div class="login-box">
+    <div class="login-brand">Page<span>.</span>Craft</div>
+    <div class="login-sub">관리자 전용 페이지</div>
+    <form id="loginForm" autocomplete="on">
+      <div class="lfield"><input type="text" id="lid" placeholder="아이디" autocomplete="username"/></div>
+      <div class="lfield"><input type="password" id="lpw" placeholder="비밀번호" autocomplete="current-password"/></div>
+      <div class="lerr" id="lerr">아이디 또는 비밀번호가 틀렸습니다</div>
+      <button class="lbtn" type="submit">로그인</button>
+    </form>
+  </div>
+</div>
+
+<!-- ── ADMIN ── -->
+<div id="adminWrap" style="display:none">
+  <nav class="anav">
+    <div class="anav-inner">
+      <div class="abrand">Page<span>.</span>Craft <em>Admin</em></div>
+      <button class="logout-btn" id="logoutBtn">로그아웃</button>
+    </div>
+  </nav>
+
+  <main class="amain">
+    <div class="page-title">신청 관리</div>
+
+    <!-- 통계 카드 -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num" id="sTotal">0</div>
+        <div class="stat-label">전체 신청</div>
+      </div>
+      <div class="stat-card s-today">
+        <div class="stat-num" id="sToday">0</div>
+        <div class="stat-label">오늘 신청</div>
+      </div>
+      <div class="stat-card s-working">
+        <div class="stat-num" id="sWorking">0</div>
+        <div class="stat-label">제작중</div>
+      </div>
+      <div class="stat-card s-done">
+        <div class="stat-num" id="sDone">0</div>
+        <div class="stat-label">완료</div>
+      </div>
+    </div>
+
+    <!-- 툴바 -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <input class="search-input" type="search" id="searchInput" placeholder="이름, 연락처, 업종으로 검색…"/>
+        <select class="filter-sel" id="filterStatus">
+          <option value="">전체 상태</option>
+          <option value="미연락">미연락</option>
+          <option value="연락완료">연락완료</option>
+          <option value="제작중">제작중</option>
+          <option value="완료">완료</option>
+          <option value="취소">취소</option>
+        </select>
+      </div>
+      <button class="csv-btn" id="csvBtn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        CSV 다운로드
+      </button>
+    </div>
+
+    <!-- 테이블 -->
+    <div class="table-wrap" id="tableWrap">
+      <table class="atable">
+        <thead>
+          <tr>
+            <th>신청일시</th>
+            <th>이름</th>
+            <th>연락처</th>
+            <th>예산</th>
+            <th>업종/서비스</th>
+            <th>레퍼런스</th>
+            <th>상태</th>
+            <th>메모</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty-msg" id="emptyMsg" style="display:none">
+        <div class="empty-icon">📋</div>
+        신청 내역이 없습니다
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const ADMIN_ID  = 'admin';
+const ADMIN_PW  = 'pagecraft2025!!';
+const STORE_KEY = 'pagecraft_submissions';
+const SES_KEY   = 'pagecraft_admin';
+
+const STATUS_CLASS = {
+  '미연락':  'st-new',
+  '연락완료':'st-contacted',
+  '제작중':  'st-working',
+  '완료':    'st-done',
+  '취소':    'st-cancel',
+};
+const STATUSES = ['미연락','연락완료','제작중','완료','취소'];
+
+// ── 인증 ──────────────────────────────────────────────────────────────────
+function isLoggedIn(){ return sessionStorage.getItem(SES_KEY) === '1'; }
+
+document.getElementById('loginForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const id = document.getElementById('lid').value.trim();
+  const pw = document.getElementById('lpw').value;
+  if(id === ADMIN_ID && pw === ADMIN_PW){
+    sessionStorage.setItem(SES_KEY, '1');
+    showAdmin();
+  } else {
+    document.getElementById('lerr').classList.add('on');
+  }
+});
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  sessionStorage.removeItem(SES_KEY);
+  location.reload();
+});
+
+function showAdmin(){
+  document.getElementById('loginWrap').style.display  = 'none';
+  document.getElementById('adminWrap').style.display  = 'flex';
+  renderAll();
+}
+
+if(isLoggedIn()) showAdmin();
+
+// ── 데이터 ────────────────────────────────────────────────────────────────
+function load(){ return JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); }
+function save(d){ localStorage.setItem(STORE_KEY, JSON.stringify(d)); }
+
+// ── 통계 ──────────────────────────────────────────────────────────────────
+function updateStats(data){
+  const todayStr = new Date().toLocaleDateString('ko-KR');
+  document.getElementById('sTotal').textContent   = data.length;
+  document.getElementById('sToday').textContent   = data.filter(d => (d.createdAt||'').startsWith(todayStr)).length;
+  document.getElementById('sWorking').textContent = data.filter(d => d.status === '제작중').length;
+  document.getElementById('sDone').textContent    = data.filter(d => d.status === '완료').length;
+}
+
+// ── 렌더링 ────────────────────────────────────────────────────────────────
+let filter = { q: '', status: '' };
+
+function renderAll(){
+  const data = load();
+  updateStats(data);
+
+  let rows = [...data].reverse();
+  if(filter.q){
+    const q = filter.q.toLowerCase();
+    rows = rows.filter(r =>
+      (r.name||'').toLowerCase().includes(q) ||
+      (r.phone||'').includes(q) ||
+      (r.description||'').toLowerCase().includes(q)
+    );
+  }
+  if(filter.status) rows = rows.filter(r => r.status === filter.status);
+
+  const tbody   = document.getElementById('tbody');
+  const emptyEl = document.getElementById('emptyMsg');
+
+  if(!rows.length){
+    tbody.innerHTML = '';
+    emptyEl.style.display = 'block';
+    return;
+  }
+  emptyEl.style.display = 'none';
+
+  tbody.innerHTML = rows.map(r => {
+    const sc  = STATUS_CLASS[r.status] || 'st-new';
+    const bCls = r.budget === 'plan' ? 'plan' : r.budget === 'custom' ? 'custom' : '';
+    const bLbl = r.budget === 'plan' ? '기획+제작 99만' : r.budget === 'custom' ? '커스텀 문의' : '기본 49.9만';
+    const opts = STATUSES.map(s =>
+      `<option value="${s}"${s===r.status?' selected':''}>${s}</option>`
+    ).join('');
+    const ref = r.reference
+      ? `<a href="${esc(r.reference)}" target="_blank" rel="noopener" title="${esc(r.reference)}">${esc(trunc(r.reference,26))}</a>`
+      : '<span style="color:#ccc">—</span>';
+    const memoEmpty = !(r.memo||'').trim();
+    return `
+    <tr data-id="${r.id}">
+      <td class="td-date">${esc(r.createdAt||'')}</td>
+      <td class="td-name">${esc(r.name||'')}</td>
+      <td class="td-phone">${esc(r.phone||'')}</td>
+      <td><span class="budget-badge ${bCls}">${bLbl}</span></td>
+      <td class="td-desc">${esc(r.description||'')}</td>
+      <td class="td-ref">${ref}</td>
+      <td>
+        <select class="status-sel ${sc}" onchange="changeStatus(${r.id},this)">
+          ${opts}
+        </select>
+      </td>
+      <td class="memo-cell">
+        <div class="memo-text${memoEmpty?' empty':''}" onclick="startEdit(this)">${memoEmpty?'메모 입력…':esc(r.memo)}</div>
+        <textarea class="memo-edit" onblur="saveMemo(${r.id},this)" onkeydown="memoKey(event,${r.id},this)">${esc(r.memo||'')}</textarea>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ── 상태 변경 ─────────────────────────────────────────────────────────────
+function changeStatus(id, sel){
+  const data = load();
+  const item = data.find(d => d.id === id);
+  if(!item) return;
+  item.status = sel.value;
+  save(data);
+  sel.className = 'status-sel ' + (STATUS_CLASS[sel.value]||'st-new');
+  updateStats(data);
+}
+
+// ── 메모 인라인 편집 ─────────────────────────────────────────────────────
+function startEdit(el){
+  el.style.display = 'none';
+  const ta = el.nextElementSibling;
+  ta.style.display = 'block';
+  ta.focus();
+  ta.selectionStart = ta.selectionEnd = ta.value.length;
+}
+
+function saveMemo(id, ta){
+  const data = load();
+  const item = data.find(d => d.id === id);
+  if(item){ item.memo = ta.value; save(data); }
+  ta.style.display = 'none';
+  const textEl = ta.previousElementSibling;
+  const empty  = !(ta.value||'').trim();
+  textEl.textContent = empty ? '메모 입력…' : ta.value;
+  textEl.className   = 'memo-text' + (empty ? ' empty' : '');
+  textEl.style.display = 'block';
+}
+
+function memoKey(e, id, ta){
+  if(e.key==='Escape'){ e.preventDefault(); saveMemo(id,ta); }
+  if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); saveMemo(id,ta); }
+}
+
+// ── 검색 / 필터 ───────────────────────────────────────────────────────────
+document.getElementById('searchInput').addEventListener('input', e => { filter.q = e.target.value; renderAll(); });
+document.getElementById('filterStatus').addEventListener('change', e => { filter.status = e.target.value; renderAll(); });
+
+// ── CSV 다운로드 ──────────────────────────────────────────────────────────
+document.getElementById('csvBtn').addEventListener('click', () => {
+  const data = load();
+  if(!data.length){ alert('다운로드할 데이터가 없습니다'); return; }
+  const headers = ['신청일시','이름','연락처','예산','업종/서비스','레퍼런스URL','추가요청','상태','메모'];
+  const rows = data.map(r => [
+    r.createdAt, r.name, r.phone,
+    r.budget==='plan'?'기획+제작 999,000':r.budget==='custom'?'커스텀 문의':'기본 499,000',
+    r.description, r.reference, r.note, r.status, r.memo
+  ].map(v => `"${String(v||'').replace(/"/g,'""')}"`).join(','));
+  const csv = '﻿' + [headers.join(','), ...rows].join('\r\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = `pagecraft_신청_${new Date().toLocaleDateString('ko-KR').replace(/\. /g,'-').replace('.','')}`.replace(' ','') + '.csv';
+  a.click();
+});
+
+// ── 유틸 ──────────────────────────────────────────────────────────────────
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function trunc(s,n){ return s.length>n ? s.slice(0,n)+'…' : s; }
+</script>
+</body>
+</html>

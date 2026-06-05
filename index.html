@@ -1082,6 +1082,9 @@ document.querySelectorAll('.chip[data-v]').forEach(c => {
   });
 });
 
+// ── APPS SCRIPT URL (구글 시트 연동 — URL 발급 후 여기에 입력) ──
+const APPS_SCRIPT_URL = 'PLACEHOLDER_APPS_SCRIPT_URL';
+
 // ── FORM SUBMIT ──
 document.getElementById('cf').addEventListener('submit', e => {
   e.preventDefault();
@@ -1096,6 +1099,32 @@ document.getElementById('cf').addEventListener('submit', e => {
   if(!r){ document.getElementById('er').classList.add('on'); ok=false; }
   if(!d){ document.getElementById('ed').classList.add('on'); ok=false; }
   if(!ok){ document.querySelector('.ferr.on')?.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+
+  // ── 신청 데이터 localStorage 저장 ──
+  const budget = document.querySelector('.chip.on[data-v]')?.dataset.v ?? '기본';
+  const note   = document.getElementById('fno').value.trim();
+  const sub = {
+    id: Date.now(),
+    name: n, phone: p, reference: r, description: d,
+    note, budget,
+    createdAt: new Date().toLocaleString('ko-KR'),
+    status: '미연락',
+    memo: ''
+  };
+  const subs = JSON.parse(localStorage.getItem('pagecraft_submissions') || '[]');
+  subs.push(sub);
+  localStorage.setItem('pagecraft_submissions', JSON.stringify(subs));
+
+  // ── 구글 시트 전송 (Apps Script URL 설정 후 자동 활성화) ──
+  if(APPS_SCRIPT_URL !== 'PLACEHOLDER_APPS_SCRIPT_URL'){
+    const params = new URLSearchParams({
+      name: sub.name, phone: sub.phone, reference: sub.reference,
+      description: sub.description, note: sub.note, budget: sub.budget,
+      createdAt: sub.createdAt
+    });
+    fetch(APPS_SCRIPT_URL + '?' + params, { method:'GET', mode:'no-cors' }).catch(()=>{});
+  }
+
   document.getElementById('mask').classList.add('show');
   document.getElementById('cf').reset();
   document.querySelectorAll('.chip[data-v]').forEach(x => x.classList.remove('on'));

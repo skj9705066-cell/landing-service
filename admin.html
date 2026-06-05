@@ -232,14 +232,24 @@ if(isLoggedIn()) showAdmin();
 async function loadData(){
   setLoading(true);
   try {
-    const res  = await fetch(GAS_URL + '?action=getAll');
-    const json = await res.json();
-    // GAS가 배열 또는 {data:[...]} 형태로 반환하는 경우 모두 처리
-    allRows = Array.isArray(json) ? json : (json.data ?? []);
+    const res = await fetch(GAS_URL + '?action=get', { redirect: 'follow' });
+    const text = await res.text();
+    let json;
+    try {
+      json = JSON.parse(text);
+    } catch(_) {
+      throw new Error('GAS 응답 파싱 실패 (HTTP ' + res.status + '): ' + text.slice(0, 120));
+    }
+    // GAS가 배열 / {data:[]} / {result:[]} 어떤 형태든 처리
+    if (Array.isArray(json))        allRows = json;
+    else if (Array.isArray(json.data))   allRows = json.data;
+    else if (Array.isArray(json.result)) allRows = json.result;
+    else if (json.error) throw new Error('GAS 오류: ' + json.error);
+    else allRows = [];
     renderAll();
     setLoading(false);
   } catch(err) {
-    setError('데이터 조회 실패: ' + err.message);
+    setError(err.message);
   }
 }
 

@@ -1104,15 +1104,15 @@ document.getElementById('cf').addEventListener('submit', e => {
   const budget = document.querySelector('.chip.on[data-v]')?.dataset.v ?? '기본';
   const note   = document.getElementById('fno').value.trim();
   fetch(GAS_URL, {
-    method: 'POST',
-    mode:   'no-cors',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
+    method:  'POST',
+    mode:    'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({
       action: 'submit',
       name: n, phone: p, reference: r, description: d,
       note, budget,
       createdAt: new Date().toLocaleString('ko-KR')
-    }).toString()
+    })
   }).catch(() => {});
 
   document.getElementById('mask').classList.add('show');

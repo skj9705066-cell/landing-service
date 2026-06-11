@@ -281,9 +281,8 @@ section{padding:96px 0}
 .faq-q-text{flex:1}
 .faq-ico{flex-shrink:0;color:var(--soft);font-size:1.1rem;transition:transform .35s var(--ease),color .25s}
 .faq-item.open .faq-ico{transform:rotate(180deg);color:var(--orange)}
-/* grid-template-rows 0fr→1fr 부드러운 아코디언 */
-.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
-.faq-item.open .faq-a{grid-template-rows:1fr}
+/* max-height 아코디언 (높이는 JS로 제어 — 엣지 등에서 첫 줄 새는 문제 방지) */
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s var(--ease)}
 .faq-a-in{overflow:hidden;min-height:0;padding:2px 24px 22px 66px;font-size:.92rem;color:var(--mid);line-height:1.75;word-break:keep-all}
 
 /* ─── FORM ─── */
@@ -781,23 +780,23 @@ footer{background:#0B0D20;padding:46px 0 calc(96px + env(safe-area-inset-bottom)
     </div>
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" onclick="faq(this)"><span class="faq-mark">Q</span><span class="faq-q-text">정말 광고 문의가 늘어나나요?</span><span class="faq-ico">⌃</span></button>
+        <button class="faq-q" onclick="faq(this)"><span class="faq-mark">Q</span><span class="faq-q-text">정말 광고 문의가 늘어나나요?</span><span class="faq-ico">⌄</span></button>
         <div class="faq-a"><div class="faq-a-in">랜딩페이지의 역할은 광고로 들어온 방문자를 "문의"로 바꾸는 것입니다. 첫 화면에서 서비스·가격·CTA가 바로 보이도록 전환 중심으로 설계하기 때문에, 같은 광고비로도 문의 전환율을 높이는 데 초점을 맞춥니다.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="faq(this)"><span class="faq-mark">Q</span><span class="faq-q-text">정말 마음에 안 들면 무료인가요?</span><span class="faq-ico">⌃</span></button>
+        <button class="faq-q" onclick="faq(this)"><span class="faq-mark">Q</span><span class="faq-q-text">정말 마음에 안 들면 무료인가요?</span><span class="faq-ico">⌄</span></button>
         <div class="faq-a"><div class="faq-a-in">네, 진짜입니다. 완성본을 보신 후 수정 2회까지 반영했는데도 불만족하시면 비용은 0원입니다. 결과물로 증명하는 방식을 선택했습니다.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="faq(this)"><span class="faq-mark">Q</span><span class="faq-q-text">정말 하루만에 완성되나요?</span><span class="faq-ico">⌃</span></button>
+        <button class="faq-q" onclick="faq(this)"><span class="faq-mark">Q</span><span class="faq-q-text">정말 하루만에 완성되나요?</span><span class="faq-ico">⌄</span></button>
         <div class="faq-a"><div class="faq-a-in">네, 오전에 레퍼런스를 받으면 당일 저녁 전에 완성본을 전달드립니다. 복잡도에 따라 최대 24시간이 걸릴 수 있지만, 항상 기한 내 완성을 보장합니다.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="faq(this)"><span class="faq-mark">Q</span><span class="faq-q-text">레퍼런스가 없어도 되나요?</span><span class="faq-ico">⌃</span></button>
+        <button class="faq-q" onclick="faq(this)"><span class="faq-mark">Q</span><span class="faq-q-text">레퍼런스가 없어도 되나요?</span><span class="faq-ico">⌄</span></button>
         <div class="faq-a"><div class="faq-a-in">가능합니다. 업종과 원하시는 느낌을 말씀해주시면 제가 레퍼런스를 찾아 제안드립니다. 기획 패키지를 이용하시면 내용 구성까지 함께 잡아드립니다.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="faq(this)"><span class="faq-mark">Q</span><span class="faq-q-text">완성 후 수정은 몇 번 가능한가요?</span><span class="faq-ico">⌃</span></button>
+        <button class="faq-q" onclick="faq(this)"><span class="faq-mark">Q</span><span class="faq-q-text">완성 후 수정은 몇 번 가능한가요?</span><span class="faq-ico">⌄</span></button>
         <div class="faq-a"><div class="faq-a-in">2회 무료입니다. 이후 추가 수정은 건당 50,000원입니다. 처음에 요청사항을 꼼꼼히 전달해주시면 무료 범위 안에서 충분히 해결됩니다.</div></div>
       </div>
     </div>
@@ -930,12 +929,19 @@ function scrollToForm() {
   document.getElementById('contact').scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-// ── FAQ ──
-function faq(btn) {
-  const item = btn.closest('.faq-item');
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-  if(!isOpen) item.classList.add('open');
+// ── FAQ (max-height를 JS로 제어) ──
+function faq(btn){
+  const item=btn.closest('.faq-item');
+  const ans=item.querySelector('.faq-a');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>{
+    i.classList.remove('open');
+    i.querySelector('.faq-a').style.maxHeight='';
+  });
+  if(!isOpen){
+    item.classList.add('open');
+    ans.style.maxHeight=ans.scrollHeight+'px';
+  }
 }
 
 // ── PHONE AUTO-HYPHEN ──
